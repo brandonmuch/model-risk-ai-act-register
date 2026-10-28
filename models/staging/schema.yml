@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_model_changes
+    description: "Tracks approved model changes and their implementation deadlines."
+    columns:
+      - name: change_id
+        tests:
+          - not_null
+          - unique
+      - name: model_id
+        tests:
+          - not_null
+
+  - name: stg_validation_evidence
+    description: "Tracks independent validation evidence for model changes."
+    columns:
+      - name: validation_id
+        tests:
+          - not_null
+          - unique
+      - name: change_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_model_changes')
+              field: change_id # Must link to a real model change
